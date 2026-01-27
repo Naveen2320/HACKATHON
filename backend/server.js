@@ -23,16 +23,23 @@ app.use(express.json());
 const connectDB = async () => {
     try {
         let mongoUri = process.env.MONGO_URI;
+        let shouldUseInMemory = false;
 
-        // If URI is localhost, assume we need memory server since user likely doesn't have MongoDB installed
-        if (!mongoUri || mongoUri.includes('localhost')) {
-            console.log("No external MongoDB detected. Starting in-memory database...");
-            const mongod = await MongoMemoryServer.create();
-            mongoUri = mongod.getUri();
+        try {
+            // Try connecting to the provided URI first
+            await mongoose.connect(mongoUri);
+            console.log(`MongoDB Connected: ${mongoUri}`);
+        } catch (err) {
+            console.log("Failed to connect to local MongoDB. Falling back to in-memory database...");
+            shouldUseInMemory = true;
         }
 
-        await mongoose.connect(mongoUri);
-        console.log(`MongoDB Connected: ${mongoUri}`);
+        if (shouldUseInMemory) {
+            const mongod = await MongoMemoryServer.create();
+            mongoUri = mongod.getUri();
+            await mongoose.connect(mongoUri);
+            console.log(`In-Memory MongoDB Connected: ${mongoUri}`);
+        }
 
         // Seed Data if Empty
         const count = await MenuItem.countDocuments();
