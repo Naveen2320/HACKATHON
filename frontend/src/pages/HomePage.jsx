@@ -43,7 +43,7 @@ const HomePage = () => {
                             <CategoryCard
                                 key={category.id}
                                 category={category}
-                                to={`${ROUTES.PRODUCTS}?category=${category.id}`}
+                                to={`${ROUTES.MENU}?category=${category.id}`}
                             />
                         ))}
                     </div>
@@ -60,7 +60,7 @@ const HomePage = () => {
                         Browse our full menu and get your favorite meals delivered to your door
                     </p>
                     <Link
-                        to={ROUTES.PRODUCTS}
+                        to={ROUTES.MENU}
                         className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
                         View All Products

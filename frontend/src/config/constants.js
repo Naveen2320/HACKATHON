@@ -7,7 +7,7 @@ export const API_CONFIG = {
 export const ROUTES = {
     HOME: '/',
     MENU: '/menu',
-    PRODUCTS: '/products',
+
     CART: '/cart',
     CHECKOUT: '/checkout',
     ORDER_CONFIRMATION: '/order-confirmation',

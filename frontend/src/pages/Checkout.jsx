@@ -21,6 +21,9 @@ const Checkout = () => {
         setLoading(true);
 
         try {
+            // Simulate Payment Processing
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
             // 1. Call API to Create Order in MongoDB
             const { data } = await api.orders.create({
                 delivery_address: formData.delivery_address,
@@ -28,8 +31,7 @@ const Checkout = () => {
             });
 
             // 2. Refresh cart context (it should now be empty)
-            // Note: You might need to expose fetchCart from context or just set local state
-            // window.location.reload() is a quick fix, but better to update context
+            await fetchCart();
 
             // 3. Redirect to Success Page
             navigate(`/order-success/${data.id}`);
@@ -86,15 +88,15 @@ const Checkout = () => {
                     <div className="grid grid-cols-2 gap-4">
                         <div className="col-span-2">
                             <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
-                            <input type="text" placeholder="0000 0000 0000 0000" className="w-full border rounded-lg p-2" />
+                            <input required type="text" placeholder="0000 0000 0000 0000" className="w-full border rounded-lg p-2" />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Expiry</label>
-                            <input type="text" placeholder="MM/YY" className="w-full border rounded-lg p-2" />
+                            <input required type="text" placeholder="MM/YY" className="w-full border rounded-lg p-2" />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
-                            <input type="text" placeholder="123" className="w-full border rounded-lg p-2" />
+                            <input required type="text" placeholder="123" className="w-full border rounded-lg p-2" />
                         </div>
                     </div>
                 </div>

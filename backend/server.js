@@ -41,6 +41,9 @@ const connectDB = async () => {
             console.log(`In-Memory MongoDB Connected: ${mongoUri}`);
         }
 
+        await mongoose.connect(mongoUri);
+        console.log(`MongoDB Connected: ${mongoUri}`);
+
         // Seed Data if Empty
         const count = await MenuItem.countDocuments();
         if (count === 0) {
@@ -110,6 +113,10 @@ app.get('/', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;

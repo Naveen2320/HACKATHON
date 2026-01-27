@@ -106,7 +106,7 @@ const OrderConfirmationPage = () => {
                     <Button
                         variant="outline"
                         size="lg"
-                        onClick={() => navigate(ROUTES.PRODUCTS)}
+                        onClick={() => navigate(ROUTES.MENU)}
                     >
                         Order Again
                     </Button>
