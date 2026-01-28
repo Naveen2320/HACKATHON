@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 1. Create the Axios Instance
 const apiClient = axios.create({
-  baseURL: '/api', // Vite proxy will forward this to http://localhost:8000/api
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api', // Uses env var in prod, proxy in dev
   headers: {
     'Content-Type': 'application/json',
     'x-api-key': 'pizza-api-key-2024', // Must match the key in your backend .env
@@ -40,9 +40,9 @@ export const api = {
   // Cart Routes
   cart: {
     get: () => apiClient.get('/cart'),
-    add: (menuItemId, quantity = 1) => 
+    add: (menuItemId, quantity = 1) =>
       apiClient.post('/cart/add', { menu_item_id: menuItemId, quantity }),
-    update: (menuItemId, quantity) => 
+    update: (menuItemId, quantity) =>
       apiClient.put('/cart/update', { menu_item_id: menuItemId, quantity }),
     remove: (menuItemId) => apiClient.delete(`/cart/item/${menuItemId}`),
     clear: () => apiClient.delete('/cart/clear'),
